@@ -5,6 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
+
 builder.Services.AddBrewerServices();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -41,5 +43,6 @@ app.UseSwaggerUI();
 app.AddBeersEndpoint();
 
 app.MapRazorPages();
+app.MapBlazorHub();
 
 app.Run();

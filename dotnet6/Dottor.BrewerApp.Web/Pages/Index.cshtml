@@ -13,7 +13,7 @@
     {
         index++;
 
-        <div class="card mb-3 @(index % 2 == 0 ? "odd" : "even")">
+        <div class="beer-card card mb-3 @(index % 2 == 0 ? "odd" : "even")">
             <img src="@beer.ImageUrl" alt="@beer.Name" class="card-img-top m-3" />
             <div class="card-body">
                 <h5 class="card-title">@beer.Name</h5>

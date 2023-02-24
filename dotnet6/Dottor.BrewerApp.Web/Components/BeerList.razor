@@ -1,0 +1,69 @@
+﻿@using Dottor.BrewerApp.Common.Services
+@using Dottor.BrewerApp.Common.Models
+
+@inject IBrewerService BrewerService
+
+<h1>Blazor beers</h1>
+
+
+<div class="form-group mb-3">
+    <input class="form-control" @bind="FilterText" @bind:event="oninput" placeholder="Find beer by name..." />
+</div>
+
+@if (_beers is not null)
+{
+    int index = 0;
+    foreach (var beer in _filteredBeers)
+    {
+        index++;
+
+        <div class="beer-card card mb-3 @(index % 2 == 0 ? "odd" : "even")">
+            <img src="@beer.ImageUrl" alt="@beer.Name" class="card-img-top m-3" />
+            <div class="card-body">
+                <h5 class="card-title">@beer.Name</h5>
+                <p class="card-text">
+                    <strong>@beer.Tagline</strong>
+                </p>
+                <p class="card-text">
+                    @beer.Description
+                </p>
+                <a asp-page="Details" asp-route-id="@beer.Id" asp-area="" class="btn btn-primary">Details</a>
+            </div>
+        </div>
+
+    }
+}
+
+@code {
+    private IEnumerable<Beer> _beers = Enumerable.Empty<Beer>();
+    private IEnumerable<Beer> _filteredBeers = Enumerable.Empty<Beer>();
+
+    private string _filterText = string.Empty;
+    private string FilterText
+    {
+        get { return _filterText; }
+        set
+        {
+            if (_filterText.Equals(value))
+                return;
+
+            _filterText = value;
+            ApplyFilter();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _beers = await BrewerService.GetBeersAsync();
+        ApplyFilter();
+    }
+
+    private void ApplyFilter()
+    {
+        _filteredBeers = _beers
+                            .Where(x => string.IsNullOrWhiteSpace(FilterText) || x.Name.Contains(FilterText, StringComparison.OrdinalIgnoreCase))
+                            .ToList();
+    }
+
+
+}
