@@ -37,12 +37,19 @@
             var client = _httpClientFactory.CreateClient(HttpClientName);
             var httpRespose = await client.GetAsync("v2/beers");
 
-            httpRespose.EnsureSuccessStatusCode();
+            if (httpRespose.IsSuccessStatusCode)
+            {
+                var list = await httpRespose.Content.ReadFromJsonAsync<BeerDto[]>();
 
-            var list = await httpRespose.Content.ReadFromJsonAsync<BeerDto[]>();
+                var beers = list.Select(x => BeerMapper.Map(x));
+                return beers;
+            }
+            else
+            {
+                _logger.LogError("Error on call 'v2/beers/'. Response status code: {StatusCode} {ReasonPhrase}", (int)httpRespose.StatusCode, httpRespose.ReasonPhrase);
+            }
 
-            var beers = list.Select(x => BeerMapper.Map(x));
-            return beers;
+            return Enumerable.Empty<Beer>();
         }
 
         public async Task<Beer?> GetBeerAsync(int id)
@@ -50,33 +57,45 @@
             var client = _httpClientFactory.CreateClient(HttpClientName);
             var httpRespose = await client.GetAsync($"v2/beers/{id}");
 
-            httpRespose.EnsureSuccessStatusCode();
-
-            var list = await httpRespose.Content.ReadFromJsonAsync<BeerDto[]>();
-            if (list is not null && 
-                list.Length > 0)
+            if (httpRespose.IsSuccessStatusCode)
             {
-                var beer = BeerMapper.Map(list[0]);
-                return beer;
+                var list = await httpRespose.Content.ReadFromJsonAsync<BeerDto[]>();
+                if (list is not null &&
+                    list.Length > 0)
+                {
+                    var beer = BeerMapper.Map(list[0]);
+                    return beer;
+                }
             }
+            else
+            {
+                _logger.LogError("Error on call 'v2/beers/{id}'. Response status code: {StatusCode} {ReasonPhrase}", id, (int)httpRespose.StatusCode, httpRespose.ReasonPhrase);
+            }
+
             return null;
         }
 
-        public async Task<Beer?> GetRandomBeerAsync()
+        public async Task<Beer> GetRandomBeerAsync()
         {
             var client = _httpClientFactory.CreateClient(HttpClientName);
             var httpRespose = await client.GetAsync("v2/beers/random");
-
-            httpRespose.EnsureSuccessStatusCode();
-
-            var list = await httpRespose.Content.ReadFromJsonAsync<BeerDto[]>();
-            if (list is not null &&
-                list.Length > 0)
+            
+            if (httpRespose.IsSuccessStatusCode)
             {
-                var beer = BeerMapper.Map(list[0]);
-                return beer;
+                var list = await httpRespose.Content.ReadFromJsonAsync<BeerDto[]>();
+                if (list is not null &&
+                    list.Length > 0)
+                {
+                    var beer = BeerMapper.Map(list[0]);
+                    return beer;
+                }
             }
-            return null;
+            else
+            {
+                _logger.LogError("Error on call 'v2/beers/random'. Response status code: {StatusCode} {ReasonPhrase}", (int)httpRespose.StatusCode, httpRespose.ReasonPhrase);
+            }
+
+            throw new Exception("Random bear API return no beer.");
         }
     }
 }

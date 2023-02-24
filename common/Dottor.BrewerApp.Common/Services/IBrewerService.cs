@@ -10,5 +10,5 @@ public interface IBrewerService
 
     Task<Beer?> GetBeerAsync(int id);
 
-    Task<Beer?> GetRandomBeerAsync();
+    Task<Beer> GetRandomBeerAsync();
 }
