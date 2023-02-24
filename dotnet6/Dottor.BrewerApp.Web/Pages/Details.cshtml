@@ -1,0 +1,44 @@
+﻿@page "{id}"
+@model Dottor.BrewerApp.Web.Pages.DetailsModel
+@{
+    ViewData["Title"] = Model.Beer?.Name ?? "Beer details";
+}
+
+
+@if (Model.Beer is not null)
+{
+    <h1>@Model.Beer.Name</h1>
+    <div class="row">
+        <div class="col-2">
+            <img src="@Model.Beer.ImageUrl" alt="@Model.Beer.Name" class="img-fluid float-start" style="max-height: 500px;" />
+        </div>
+        <div class="col">
+            <h2>@Model.Beer.Tagline</h2>
+            <p>
+                @Model.Beer.Description</p>
+            <hr />
+            <p>
+                Alcohol <strong>@Model.Beer.Abv %</strong><br />
+                First brewed: <strong>@Model.Beer.FirstBrewed</strong>
+            </p>
+            @if (!string.IsNullOrWhiteSpace(Model.Beer.BrewersTips))
+            {
+                <h5>Tips</h5>
+                <p>
+                    @Model.Beer.BrewersTips
+            </p>
+            }
+            @if(Model.Beer.FoodPairing.Length > 0)
+            {
+                <h5>Food pairing</h5>
+                <ul>
+                @foreach (var item in Model.Beer.FoodPairing)
+                {
+                    <li>@item</li>
+                }
+                </ul>
+            }    
+        </div>
+    </div>
+
+}

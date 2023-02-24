@@ -1,0 +1,33 @@
+﻿.card {
+    flex-direction: row;
+    align-items: center;
+}
+
+    .card.odd {
+        flex-direction: row-reverse;
+    }
+
+.card-title {
+    font-weight: bold;
+}
+
+.card img {
+    height: 200px;
+    width: auto;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: calc(0.25rem - 1px);
+}
+
+@@media only screen and (max-width: 768px) {
+    .card-body {
+        padding: 0.5em 1.2em;
+    }
+
+        .card-body .card-text {
+            margin: 0;
+        }
+
+    .card img {
+        height: 150px;
+    }
+}

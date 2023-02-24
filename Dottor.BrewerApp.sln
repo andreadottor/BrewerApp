@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33414.496
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dottor.BrewerApp.Common", "common\Dottor.BrewerApp.Common\Dottor.BrewerApp.Common.csproj", "{37476C6D-8CF4-4338-BE46-EBA416F4A9BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET 6", ".NET 6", "{5F73E4B5-A50B-4FAC-8421-60B45F22A98A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dottor.BrewerApp.Web", "dotnet6\Dottor.BrewerApp.Web\Dottor.BrewerApp.Web.csproj", "{1B0B9E0D-FA35-4DEF-AA18-443DE0DC79B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET 7", ".NET 7", "{62E9765D-4E5E-476B-8E75-7C309195430D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dottor.BrewerApp.Web", "dotnet7\Dottor.BrewerApp.Web\Dottor.BrewerApp.Web.csproj", "{7E92E73A-00E0-461B-8290-84334FFBAA5B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37476C6D-8CF4-4338-BE46-EBA416F4A9BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37476C6D-8CF4-4338-BE46-EBA416F4A9BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37476C6D-8CF4-4338-BE46-EBA416F4A9BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37476C6D-8CF4-4338-BE46-EBA416F4A9BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B0B9E0D-FA35-4DEF-AA18-443DE0DC79B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B0B9E0D-FA35-4DEF-AA18-443DE0DC79B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B0B9E0D-FA35-4DEF-AA18-443DE0DC79B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B0B9E0D-FA35-4DEF-AA18-443DE0DC79B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E92E73A-00E0-461B-8290-84334FFBAA5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E92E73A-00E0-461B-8290-84334FFBAA5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E92E73A-00E0-461B-8290-84334FFBAA5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E92E73A-00E0-461B-8290-84334FFBAA5B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1B0B9E0D-FA35-4DEF-AA18-443DE0DC79B1} = {5F73E4B5-A50B-4FAC-8421-60B45F22A98A}
+		{7E92E73A-00E0-461B-8290-84334FFBAA5B} = {62E9765D-4E5E-476B-8E75-7C309195430D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3DA3E690-E88E-4DFD-B906-EB96DA5A0C1A}
+	EndGlobalSection
+EndGlobal
