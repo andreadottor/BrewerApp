@@ -4,7 +4,11 @@
     using Dottor.BrewerApp.Common.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.AspNetCore.OutputCaching;
 
+
+    // 60sec * 10min
+    [OutputCache(Duration = 60 * 10)]
     public class IndexModel : PageModel
     {
         private readonly IBrewerService _brewerService;

@@ -1,0 +1,54 @@
+﻿@page
+
+@{
+    ViewData["Title"] = "Test RateLimit";
+}
+
+
+<div class="row row-cols-lg-auto g-3 align-items-center">
+    <div class="col-12">
+        <div class="input-group">
+            <div class="input-group-text">Request number:</div>
+            <input type="text" class="form-control" id="txtRequestNumber" value="30">
+        </div>
+    </div>
+    <div class="col-12">
+        <button onclick="startRequests('/api/v1/beers','txtRequestNumber','pnlResults')" class="btn btn-primary">START</button>
+    </div>
+</div>
+
+<ul id="pnlResults" class="mt-3"></ul>
+
+
+<script language="javascript">
+    async function startRequests(url, requestNumberInputId, resultlistContainerId) {
+        var n = document.getElementById(requestNumberInputId).value;
+
+        var resultContainer = document.getElementById(resultlistContainerId);
+        resultContainer.innerHTML = "";
+
+        for (let i = 0; i < n; i++) {
+
+            const node = document.createElement("li");
+            const textnode = document.createTextNode("Request Number " + i);
+            node.appendChild(textnode);
+            resultContainer.appendChild(node);
+
+            const sendDate = (new Date()).getTime();
+
+            fetch(url + '#_ts=' + Math.random())
+                .then((response) => {
+                    var receiveDate = (new Date()).getTime();
+                    var responseTimeMs = receiveDate - sendDate;
+                    node.innerHTML += " - " + response.status + " " + responseTimeMs + "ms";
+                    if (response.status == 200) {
+                        node.style.backgroundColor = "#00FF00";
+                    }
+                    else {
+                        node.style.color = "#FF0000";
+                    }
+                });
+        }
+    }
+
+</script>

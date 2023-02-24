@@ -31,7 +31,7 @@ namespace Dottor.BrewerApp.Web.Pages
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error on retrieve a beer with id '{berrId}'.", id);
+                _logger.LogError(ex, "Error on retrieve a beer with id '{beerId}'.", id);
                 return RedirectToPage("Error");
             }
         }

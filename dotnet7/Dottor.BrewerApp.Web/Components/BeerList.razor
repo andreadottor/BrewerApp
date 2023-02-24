@@ -10,11 +10,9 @@
     <input class="form-control" @bind="FilterText" @bind:event="oninput" placeholder="Find beer by name..." />
 </div>
 
-@if (_beers is not null)
-{
+@if (_beers is not null) {
     int index = 0;
-    foreach (var beer in _filteredBeers)
-    {
+    foreach (var beer in _filteredBeers) {
         index++;
 
         <div class="beer-card card mb-3 @(index % 2 == 0 ? "odd" : "even")">
@@ -39,11 +37,9 @@
     private IEnumerable<Beer> _filteredBeers = Enumerable.Empty<Beer>();
 
     private string _filterText = string.Empty;
-    private string FilterText
-    {
+    private string FilterText {
         get { return _filterText; }
-        set
-        {
+        set {
             if (_filterText.Equals(value))
                 return;
 
@@ -52,14 +48,12 @@
         }
     }
 
-    protected override async Task OnInitializedAsync()
-    {
+    protected override async Task OnInitializedAsync() {
         _beers = await BrewerService.GetBeersAsync();
         ApplyFilter();
     }
 
-    private void ApplyFilter()
-    {
+    private void ApplyFilter() {
         _filteredBeers = _beers
                             .Where(x => string.IsNullOrWhiteSpace(FilterText) || x.Name.Contains(FilterText, StringComparison.OrdinalIgnoreCase))
                             .ToList();

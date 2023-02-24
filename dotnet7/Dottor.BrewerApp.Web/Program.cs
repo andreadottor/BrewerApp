@@ -1,11 +1,18 @@
 using Dottor.BrewerApp.Common;
+using Dottor.BrewerApp.Web.Components;
 using Dottor.BrewerApp.Web.Endpoints;
+using Dottor.BrewerApp.Web.Extensions;
+using Microsoft.AspNetCore.Components.Web;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+builder.Services.AddServerSideBlazor(options =>
+{
+    options.RootComponents.RegisterCustomElement<BeerList>("beer-list");
+});
 
 builder.Services.AddBrewerServices();
 
@@ -17,8 +24,10 @@ builder.Services.AddSwaggerGen(options =>
         Title = "BrewerApp API (.NET 7)",
         Version = "v1"
     });
-    options.EnableAnnotations();
 });
+
+builder.Services.AddRateLimiting();
+builder.Services.AddOutputCache();
 
 var app = builder.Build();
 
@@ -37,8 +46,12 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseOutputCache();
+
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseRateLimiter();
 
 app.AddBeersEndpoint();
 

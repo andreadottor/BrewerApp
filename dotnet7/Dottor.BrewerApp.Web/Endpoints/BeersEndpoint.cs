@@ -2,37 +2,44 @@
 {
     using Dottor.BrewerApp.Common.Models;
     using Dottor.BrewerApp.Common.Services;
-    using Swashbuckle.AspNetCore.Annotations;
+    using Dottor.BrewerApp.Web.Extensions;
 
     public static class BeersEndpoint
     {
 
         public static IEndpointRouteBuilder AddBeersEndpoint(this IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapGet("/api/v1/beers", GetBeersAsync)
-                        .WithName("Beers")
-                        .WithTags("Public")
-                        .Produces<IEnumerable<Beer>>(StatusCodes.Status200OK)
-                        .WithMetadata(new SwaggerOperationAttribute(
-                                summary: "GetBeersAsync",
-                                description: "Get beer list"));
+            var group = endpoints.MapGroup("/api/v1/beers");
+            group.WithTags("Public");
+            // Rate limit all of the APIs
+            group.RequirePerIPAddressRateLimit();
 
-            endpoints.MapGet("/api/v1/beers/{id}", GetBeerByIdAsync)
+            group.MapGet("", GetBeersAsync)
+                        .WithName("Beers")
+                        .Produces<IEnumerable<Beer>>(StatusCodes.Status200OK)
+                        .WithSummary("GetBeersAsync")
+                        .WithDescription("Get beer list")
+                        .WithOpenApi();
+
+            group.MapGet("{id}", GetBeerByIdAsync)
                         .WithName("BeerById")
-                        .WithTags("Public")
                         .Produces<Beer>(StatusCodes.Status200OK)
                         .Produces(StatusCodes.Status404NotFound)
-                        .WithMetadata(new SwaggerOperationAttribute(
-                                summary: "GetBeerByIdAsync",
-                                description: "Get beer by id"));
+                        .WithSummary("GetBeerByIdAsync")
+                        .WithDescription("Get beer by id")
+                        .WithOpenApi(generatedOperation =>
+                        {
+                            var parameter = generatedOperation.Parameters[0];
+                            parameter.Description = "The ID of the beer.";
+                            return generatedOperation;
+                        }); ;
 
-            endpoints.MapGet("/api/v1/beers/random", GetRandomBeerAsync)
+            group.MapGet("random", GetRandomBeerAsync)
                         .WithName("RandomBeer")
-                        .WithTags("Public")
                         .Produces<Beer>(StatusCodes.Status200OK)
-                        .WithMetadata(new SwaggerOperationAttribute(
-                                summary: "GetRandomBeerAsync",
-                                description: "Get a random beer"));
+                        .WithSummary("GetRandomBeerAsync")
+                        .WithDescription("Get a random beer")
+                        .WithOpenApi();
 
             return endpoints;
         }

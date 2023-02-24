@@ -1,11 +1,15 @@
 ﻿@page
 @model Dottor.BrewerApp.Web.Pages.ListModel
-@using Dottor.BrewerApp.Web.Components
 @{
+    ViewData["Title"] = "Blazor Beers";
 }
 
+<!-- 
+    Blazor custom elements
+    https://learn.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-7.0#blazor-custom-elements
+-->
 
-<component type="typeof(BeerList)" render-mode="Server" />
+<beer-list />
 
 @section Scripts{
     <script src="~/_framework/blazor.server.js"></script>
