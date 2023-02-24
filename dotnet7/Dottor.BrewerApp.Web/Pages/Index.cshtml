@@ -1,10 +1,31 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Beers";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Beers</h1>
+
+@if (Model.Beers is not null)
+{
+    int index = 0;
+    foreach (var beer in Model.Beers)
+    {
+        index++;
+
+        <div class="beer-card card mb-3 @(index % 2 == 0 ? "odd" : "even")">
+            <img src="@beer.ImageUrl" alt="@beer.Name" class="card-img-top m-3" />
+            <div class="card-body">
+                <h5 class="card-title">@beer.Name</h5>
+                <p class="card-text">
+                    <strong>@beer.Tagline</strong>
+                </p>
+                <p class="card-text">
+                    @beer.Description
+                </p>
+                <a asp-page="Details" asp-route-id="@beer.Id" asp-area="" class="btn btn-primary">Details</a>
+            </div>
+        </div>
+
+    }
+}

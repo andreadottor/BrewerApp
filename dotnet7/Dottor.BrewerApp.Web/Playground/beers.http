@@ -1,0 +1,15 @@
+@beerId = 1
+
+# Get all beers
+GET https://localhost:7091/api/v1/beers
+
+###
+
+# Get beer by id
+GET https://localhost:7091/api/v1/beers/{{beerId}}
+
+
+###
+
+# Get random beer
+GET https://localhost:7091/api/v1/beers/random

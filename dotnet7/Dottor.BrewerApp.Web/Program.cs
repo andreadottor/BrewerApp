@@ -1,7 +1,24 @@
+using Dottor.BrewerApp.Common;
+using Dottor.BrewerApp.Web.Endpoints;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
+
+builder.Services.AddBrewerServices();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new()
+    {
+        Title = "BrewerApp API (.NET 7)",
+        Version = "v1"
+    });
+    options.EnableAnnotations();
+});
 
 var app = builder.Build();
 
@@ -20,6 +37,12 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.AddBeersEndpoint();
+
 app.MapRazorPages();
+app.MapBlazorHub();
 
 app.Run();
