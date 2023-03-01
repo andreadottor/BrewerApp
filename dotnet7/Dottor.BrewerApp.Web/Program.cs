@@ -53,8 +53,7 @@ app.UseSwaggerUI();
 
 app.UseRateLimiter();
 
-app.AddBeersEndpoint();
-
+app.MapBeersEndpoint();
 app.MapRazorPages();
 app.MapBlazorHub();
 

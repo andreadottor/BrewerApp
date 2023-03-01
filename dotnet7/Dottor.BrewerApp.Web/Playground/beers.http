@@ -12,3 +12,14 @@ GET https://localhost:7091/api/v1/beers/{{beerId}}
 
 # Get random beer
 GET https://localhost:7091/api/v1/beers/random
+
+###
+
+# Insert beer
+POST https://localhost:7091/api/v1/beers
+Content-Type: application/json
+
+{
+    "name" : "Test"
+}
+

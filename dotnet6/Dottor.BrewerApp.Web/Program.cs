@@ -40,8 +40,7 @@ app.UseAuthorization();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.AddBeersEndpoint();
-
+app.MapBeersEndpoint();
 app.MapRazorPages();
 app.MapBlazorHub();
 

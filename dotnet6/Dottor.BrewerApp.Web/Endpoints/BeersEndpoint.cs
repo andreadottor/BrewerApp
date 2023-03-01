@@ -7,7 +7,7 @@
     public static class BeersEndpoint
     {
 
-        public static IEndpointRouteBuilder AddBeersEndpoint(this IEndpointRouteBuilder endpoints)
+        public static IEndpointRouteBuilder MapBeersEndpoint(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapGet("/api/v1/beers", GetBeersAsync)
                         .WithName("Beers")

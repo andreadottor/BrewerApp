@@ -3,69 +3,73 @@
     using Dottor.BrewerApp.Common.Models;
     using Dottor.BrewerApp.Common.Services;
     using Dottor.BrewerApp.Web.Extensions;
+    using Microsoft.AspNetCore.Http.HttpResults;
 
     public static class BeersEndpoint
     {
-
-        public static IEndpointRouteBuilder AddBeersEndpoint(this IEndpointRouteBuilder endpoints)
+        public static RouteGroupBuilder MapBeersEndpoint(this IEndpointRouteBuilder endpoints)
         {
             var group = endpoints.MapGroup("/api/v1/beers");
             group.WithTags("Public");
+            group.WithOpenApi();
+
             // Rate limit all of the APIs
+            //
             group.RequirePerIPAddressRateLimit();
 
-            group.MapGet("", GetBeersAsync)
-                        .WithName("Beers")
-                        .Produces<IEnumerable<Beer>>(StatusCodes.Status200OK)
+            group.MapGet("/", GetBeersAsync)
+                        .WithName("Beers") // set the OpenAPI OperationId
                         .WithSummary("GetBeersAsync")
-                        .WithDescription("Get beer list")
-                        .WithOpenApi();
+                        .WithDescription("Get beer list");
 
-            group.MapGet("{id}", GetBeerByIdAsync)
-                        .WithName("BeerById")
-                        .Produces<Beer>(StatusCodes.Status200OK)
-                        .Produces(StatusCodes.Status404NotFound)
-                        .WithSummary("GetBeerByIdAsync")
-                        .WithDescription("Get beer by id")
+            group.MapGet("/{id}", GetBeerByIdAsync)
                         .WithOpenApi(generatedOperation =>
                         {
-                            var parameter = generatedOperation.Parameters[0];
-                            parameter.Description = "The ID of the beer.";
+                            generatedOperation.OperationId = "BeerById";
+                            generatedOperation.Summary = "GetBeerByIdAsync";
+                            generatedOperation.Description = "Get beer by id";
+
+                            var idParameter = generatedOperation.Parameters[0];
+                            idParameter.Description = "The ID of the beer.";
+
                             return generatedOperation;
-                        }); ;
+                        });
 
-            group.MapGet("random", GetRandomBeerAsync)
+            group.MapGet("/random", GetRandomBeerAsync)
                         .WithName("RandomBeer")
-                        .Produces<Beer>(StatusCodes.Status200OK)
                         .WithSummary("GetRandomBeerAsync")
-                        .WithDescription("Get a random beer")
-                        .WithOpenApi();
+                        .WithDescription("Get a random beer");
 
-            return endpoints;
+            group.MapPost("/", InsertBeersAsync)
+                        .WithName("InsertBeer")
+                        .WithSummary("InserBeersAsync")
+                        .WithDescription("Insert new beer");
+
+            return group;
         }
 
-        public static async Task<IResult> GetBeersAsync(
-                                        IBrewerService brewerService,
-                                        ILoggerFactory loggerFactory)
+        public static async Task<Results<Ok<IEnumerable<Beer>>, ProblemHttpResult>> GetBeersAsync(
+                                            IBrewerService brewerService,
+                                            ILoggerFactory loggerFactory)
         {
             var logger = loggerFactory.CreateLogger("BeersEndpoint");
 
             try
             {
                 var list = await brewerService.GetBeersAsync();
-                return Results.Ok(list);
+                return TypedResults.Ok(list);
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error on retrieve beers list.");
-                return Results.Problem(ex.Message, title: "Error on Beers API");
+                return TypedResults.Problem(ex.Message, title: "Error on Beers API");
             }
         }
 
-        public static async Task<IResult> GetBeerByIdAsync(
-                                        int id,
-                                        IBrewerService brewerService,
-                                        ILoggerFactory loggerFactory)
+        public static async Task<Results<Ok<Beer>, NotFound, ProblemHttpResult>> GetBeerByIdAsync(
+                                            int id,
+                                            IBrewerService brewerService,
+                                            ILoggerFactory loggerFactory)
         {
             var logger = loggerFactory.CreateLogger("BeersEndpoint");
 
@@ -73,20 +77,20 @@
             {
                 var beer = await brewerService.GetBeerAsync(id);
                 if (beer is null)
-                    return Results.NotFound();
+                    return TypedResults.NotFound();
 
-                return Results.Ok(beer);
+                return TypedResults.Ok(beer);
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error on retrieve beers list.");
-                return Results.Problem(ex.Message, title: "Error on Beers API");
+                return TypedResults.Problem(ex.Message, title: "Error on Beers API");
             }
         }
 
-        public static async Task<IResult> GetRandomBeerAsync(
-                                IBrewerService brewerService,
-                                ILoggerFactory loggerFactory)
+        public static async Task<Results<Ok<Beer>, ProblemHttpResult>> GetRandomBeerAsync(
+                                            IBrewerService brewerService,
+                                            ILoggerFactory loggerFactory)
         {
             var logger = loggerFactory.CreateLogger("BeersEndpoint");
 
@@ -94,13 +98,21 @@
             {
                 var beer = await brewerService.GetRandomBeerAsync();
 
-                return Results.Ok(beer);
+                return TypedResults.Ok(beer);
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error on retrieve beers list.");
-                return Results.Problem(ex.Message, title: "Error on Beers API");
+                return TypedResults.Problem(ex.Message, title: "Error on Beers API");
             }
+        }
+        public static async Task<Results<Created<Beer>, BadRequest, ProblemHttpResult>> InsertBeersAsync(Beer beer)
+        {
+            // Fake implementation
+            //
+            beer.Id = 123;
+
+            return TypedResults.Created($"/api/v1/beers/{beer.Id}", beer);
         }
     }
 }
