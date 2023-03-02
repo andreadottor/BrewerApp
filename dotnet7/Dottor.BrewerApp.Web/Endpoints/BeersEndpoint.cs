@@ -4,18 +4,26 @@
     using Dottor.BrewerApp.Common.Services;
     using Dottor.BrewerApp.Web.Extensions;
     using Microsoft.AspNetCore.Http.HttpResults;
+    using Microsoft.Extensions.Logging;
 
     public static class BeersEndpoint
     {
         public static RouteGroupBuilder MapBeersEndpoint(this IEndpointRouteBuilder endpoints)
         {
+            var loggerFactory = endpoints.ServiceProvider.GetRequiredService<ILoggerFactory>();
+            var logger = loggerFactory.CreateLogger("BeersEndpoint");
+
             var group = endpoints.MapGroup("/api/v1/beers");
             group.WithTags("Public");
             group.WithOpenApi();
-
-            // Rate limit all of the APIs
-            //
             group.RequirePerIPAddressRateLimit();
+            group.AddEndpointFilter(async (context, next) =>
+            {
+                logger.LogInformation("Before first filter");
+                var result = await next(context);
+                logger.LogInformation("After first filter");
+                return result;
+            });
 
             group.MapGet("/", GetBeersAsync)
                         .WithName("Beers") // set the OpenAPI OperationId
