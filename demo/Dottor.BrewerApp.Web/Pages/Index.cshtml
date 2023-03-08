@@ -1,0 +1,31 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Beers";
+}
+
+<h1>Beers</h1>
+
+@if (Model.Beers is not null)
+{
+    int index = 0;
+    foreach (var beer in Model.Beers)
+    {
+        index++;
+
+        <div class="beer-card card mb-3 @(index % 2 == 0 ? "odd" : "even")">
+            <img src="@beer.ImageUrl" alt="@beer.Name" class="card-img-top m-3" />
+            <div class="card-body">
+                <h5 class="card-title">@beer.Name</h5>
+                <p class="card-text">
+                    <strong>@beer.Tagline</strong>
+                </p>
+                <p class="card-text">
+                    @beer.Description
+                </p>
+                <a asp-page="Details" asp-route-id="@beer.Id" asp-area="" class="btn btn-primary">Details</a>
+            </div>
+        </div>
+
+    }
+}
