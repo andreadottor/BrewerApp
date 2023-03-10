@@ -11,7 +11,7 @@ public static class BeersEndpoint
     public static RouteGroupBuilder MapBeersEndpoint(this IEndpointRouteBuilder endpoints)
     {
         var loggerFactory = endpoints.ServiceProvider.GetRequiredService<ILoggerFactory>();
-        var logger = loggerFactory.CreateLogger("BeersEndpoint");
+        var logger = loggerFactory.CreateLogger(nameof(BeersEndpoint));
 
         var group = endpoints.MapGroup("/api/v1/beers");
         group.WithTags("Public");
@@ -60,7 +60,7 @@ public static class BeersEndpoint
                                         IBrewerService brewerService,
                                         ILoggerFactory loggerFactory)
     {
-        var logger = loggerFactory.CreateLogger("BeersEndpoint");
+        var logger = loggerFactory.CreateLogger(nameof(BeersEndpoint));
 
         try
         {
@@ -79,7 +79,7 @@ public static class BeersEndpoint
                                         IBrewerService brewerService,
                                         ILoggerFactory loggerFactory)
     {
-        var logger = loggerFactory.CreateLogger("BeersEndpoint");
+        var logger = loggerFactory.CreateLogger(nameof(BeersEndpoint));
 
         try
         {
@@ -100,7 +100,7 @@ public static class BeersEndpoint
                                         IBrewerService brewerService,
                                         ILoggerFactory loggerFactory)
     {
-        var logger = loggerFactory.CreateLogger("BeersEndpoint");
+        var logger = loggerFactory.CreateLogger(nameof(BeersEndpoint));
 
         try
         {

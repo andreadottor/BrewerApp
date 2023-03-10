@@ -41,7 +41,7 @@ public static class BeersEndpoint
                                     IBrewerService brewerService,
                                     ILoggerFactory loggerFactory)
     {
-        var logger = loggerFactory.CreateLogger("BeersEndpoint");
+        var logger = loggerFactory.CreateLogger(nameof(BeersEndpoint));
 
         try
         {
@@ -60,7 +60,7 @@ public static class BeersEndpoint
                                     IBrewerService brewerService,
                                     ILoggerFactory loggerFactory)
     {
-        var logger = loggerFactory.CreateLogger("BeersEndpoint");
+        var logger = loggerFactory.CreateLogger(nameof(BeersEndpoint));
 
         try
         {
@@ -81,7 +81,7 @@ public static class BeersEndpoint
                             IBrewerService brewerService,
                             ILoggerFactory loggerFactory)
     {
-        var logger = loggerFactory.CreateLogger("BeersEndpoint");
+        var logger = loggerFactory.CreateLogger(nameof(BeersEndpoint));
 
         try
         {
