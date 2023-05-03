@@ -1,0 +1,63 @@
+﻿@page "/Details/{BeerId:int}"
+
+@inject IBrewerService brewerService
+
+@if (Beer == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <PageTitle>@Beer.Name</PageTitle>
+    <h1>@Beer.Name</h1>
+    <div class="row">
+        <div class="col-2">
+            <img src="@Beer.ImageUrl" alt="@Beer.Name" class="img-fluid float-start" style="max-height: 500px;" />
+        </div>
+        <div class="col">
+            <h2>@Beer.Tagline</h2>
+            <p>
+                @Beer.Description
+            </p>
+            <hr />
+            <p>
+                Alcohol <strong>@Beer.Abv %</strong><br />
+                First brewed: <strong>@Beer.FirstBrewed</strong>
+            </p>
+            @if (!string.IsNullOrWhiteSpace(Beer.BrewersTips))
+            {
+                <h5>Tips</h5>
+                <p>
+                    @Beer.BrewersTips
+                </p>
+            }
+            @if (Beer.FoodPairing.Length > 0)
+            {
+                <h5>Food pairing</h5>
+                <ul>
+                    @foreach (var item in Beer.FoodPairing)
+                    {
+                        <li>@item</li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+
+}
+
+<h1>@BeerId</h1>
+
+@code {
+    [Parameter]
+    public int BeerId { get; set; }
+
+    public Beer? Beer { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Beer ??= await brewerService.GetBeerAsync(1);
+    }
+
+
+}
