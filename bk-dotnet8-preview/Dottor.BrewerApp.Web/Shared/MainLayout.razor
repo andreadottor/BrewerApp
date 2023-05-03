@@ -1,0 +1,40 @@
+﻿@inherits LayoutComponentBase
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+@*    <link href="Dottor.BrewerApp.Web.styles.css" rel="stylesheet" />*@
+    <link rel="icon" type="image/png" href="favicon.ico" />
+    <PageTitle>BrewerApp</PageTitle>
+    <HeadOutlet />
+</head>
+<body>
+
+    <header>
+        <NavMenu />
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @Body
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - Dottor.BrewerApp.Web - <a href="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="/lib/jquery/dist/jquery.min.js" suppress-error="BL9992"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js" suppress-error="BL9992"></script>
+    <script src="/js/site.js" suppress-error="BL9992"></script>
+    <script src="_framework/blazor.united.js" suppress-error="BL9992"></script>
+</body>
+</html>
+
+

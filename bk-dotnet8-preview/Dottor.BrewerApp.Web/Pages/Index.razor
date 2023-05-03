@@ -1,0 +1,49 @@
+﻿@page "/"
+@attribute [StreamRendering(false)]
+@inject IBrewerService brewerService
+
+<PageTitle>Beers</PageTitle>
+
+<h1>Beers</h1>
+
+@if (_beers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    int index = 0;
+    foreach (var beer in _beers)
+    {
+        index++;
+
+        <div class="beer-card card mb-3 @(index % 2 == 0 ? "odd" : "even")">
+            <img src="@beer.ImageUrl" alt="@beer.Name" class="card-img-top m-3" />
+            <div class="card-body">
+                <h5 class="card-title">@beer.Name</h5>
+                <p class="card-text">
+                    <strong>@beer.Tagline</strong>
+                </p>
+                <p class="card-text">
+                    @beer.Description
+                </p>
+                <a href="/Details/@beer.Id" class="btn btn-primary">Details</a>
+            </div>
+        </div>
+
+    }
+}
+
+@code {
+    private IEnumerable<Beer>? _beers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _beers = await brewerService.GetBeersAsync();
+
+        //_beers = new List<Beer>()
+        //{
+        //    new Beer()
+        //};
+    }
+}
