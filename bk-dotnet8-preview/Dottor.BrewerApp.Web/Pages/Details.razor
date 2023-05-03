@@ -44,9 +44,9 @@ else
         </div>
     </div>
 
-}
+    <StarRatingReviews Reviews="Reviews" OnSubmitReview="OnSubmitReview" />
 
-<h1>@BeerId</h1>
+}
 
 @code {
     [Parameter, EditorRequired]
@@ -54,6 +54,7 @@ else
 
     public Beer? Beer { get; set; }
 
+    private List<Review> Reviews { get; set; } = new List<Review>();
 
 
     protected override async Task OnParametersSetAsync()
@@ -62,5 +63,9 @@ else
             Beer = await brewerService.GetBeerAsync(id);
     }
 
-
+    Task OnSubmitReview(Review review)
+    {
+        Reviews.Insert(0, review);
+        return Task.CompletedTask;
+    }
 }

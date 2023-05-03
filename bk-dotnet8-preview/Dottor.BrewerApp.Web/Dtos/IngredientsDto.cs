@@ -1,4 +1,4 @@
-﻿namespace Dottor.BrewerApp.Common.Dtos;
+namespace Dottor.BrewerApp.Dtos;
 
 internal record IngredientsDto
 {

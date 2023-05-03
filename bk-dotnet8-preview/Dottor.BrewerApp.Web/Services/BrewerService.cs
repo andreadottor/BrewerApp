@@ -1,8 +1,8 @@
-namespace Dottor.BrewerApp.Common.Services;
+namespace Dottor.BrewerApp.Web.Services;
 
-using Dottor.BrewerApp.Common.Dtos;
-using Dottor.BrewerApp.Common.Models;
-using Dottor.BrewerApp.Common.Utilities;
+using Dottor.BrewerApp.Dtos;
+using Dottor.BrewerApp.Web.Models;
+using Dottor.BrewerApp.Utilities;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,5 @@
 using Dottor.BrewerApp.Web.Shared;
-using Dottor.BrewerApp.Common;
-using Dottor.BrewerApp.Common.Services;
+using Dottor.BrewerApp.Web.Services;
 using System.Net.Http;
 
 var builder = WebApplication.CreateBuilder(args);

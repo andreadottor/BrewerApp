@@ -1,6 +1,6 @@
-﻿namespace Dottor.BrewerApp.Common.Services;
+namespace Dottor.BrewerApp.Web.Services;
 
-using Dottor.BrewerApp.Common.Models;
+using Dottor.BrewerApp.Web.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

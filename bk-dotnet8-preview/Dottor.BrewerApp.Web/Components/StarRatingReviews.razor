@@ -1,0 +1,46 @@
+﻿@inject EditContext<Review> EditContext
+@inject NavigationManager Nav
+<div class="reviews">
+    <h2>Reviews</h2>
+    <EditForm method="post" class="review-editor" EditContext="EditContext" enhance>
+        <StarRating @bind-Value="EditContext.Model.Rating" />
+        <ValidationMessage For="@(() => EditContext.Model.Rating)" class="text-danger" />
+
+        <InputTextArea rows="5" name="text" placeholder="Write a review" @bind-Value="EditContext.Model.Text" />
+        <ValidationMessage For="@(() => EditContext.Model.Text)" class="text-danger" />
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
+    @for (int i = 0; i < Reviews.Count; i++)
+    {
+        var review = Reviews[i];
+        <div class="review">
+            <StarRating Value="review.Rating" />
+            <p>@review.Text</p>
+            @if (i < Reviews.Count - 1)
+            {
+                <hr />
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public IList<Review> Reviews { get; set; } = default!;
+
+    //[SupplyParameterFromForm]
+    //public Review Review { get; set; }
+
+    [Parameter]
+    public EventCallback<Review> OnSubmitReview { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (EditContext.IsModified() && EditContext.Validate())
+        {
+            await OnSubmitReview.InvokeAsync(EditContext.Model);
+            Nav.NavigateTo(Nav.Uri, forceLoad: true);
+        }
+    }
+}

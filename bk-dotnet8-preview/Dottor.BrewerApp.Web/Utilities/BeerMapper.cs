@@ -1,7 +1,7 @@
-﻿namespace Dottor.BrewerApp.Common.Utilities;
+namespace Dottor.BrewerApp.Utilities;
 
-using Dottor.BrewerApp.Common.Dtos;
-using Dottor.BrewerApp.Common.Models;
+using Dottor.BrewerApp.Dtos;
+using Dottor.BrewerApp.Web.Models;
 
 internal class BeerMapper
 {

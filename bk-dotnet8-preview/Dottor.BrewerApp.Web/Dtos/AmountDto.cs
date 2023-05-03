@@ -1,10 +1,7 @@
-﻿namespace Dottor.BrewerApp.Common.Dtos
-{
-    
+namespace Dottor.BrewerApp.Dtos;
 
-    internal record AmountDto
-    {
-        public float Value { get; set; }
-        public string Unit { get; set; }
-    }
+internal record AmountDto
+{
+    public float Value { get; set; }
+    public string Unit { get; set; }
 }
