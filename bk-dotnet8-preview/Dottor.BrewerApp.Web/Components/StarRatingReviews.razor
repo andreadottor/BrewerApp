@@ -1,13 +1,11 @@
-﻿@inject EditContext<Review> EditContext
-@inject NavigationManager Nav
-<div class="reviews">
+﻿<div class="reviews">
     <h2>Reviews</h2>
-    <EditForm  class="review-editor" EditContext="EditContext" OnValidSubmit="SaveAsync">
-        <StarRating @bind-Value="EditContext.Model.Rating" />
-        <ValidationMessage For="@(() => EditContext.Model.Rating)" class="text-danger" />
+    <EditForm class="review-editor" Model="Item" OnValidSubmit="InsertReview">
+        <StarRating @bind-Value="Item.Rating" />
+        <ValidationMessage For="@(() => Item.Rating)" class="text-danger" />
 
-        <InputTextArea rows="5" name="text" placeholder="Write a review" @bind-Value="EditContext.Model.Text" />
-        <ValidationMessage For="@(() => EditContext.Model.Text)" class="text-danger" />
+        <InputTextArea rows="5" name="text" placeholder="Write a review" @bind-Value="Item.Text" />
+        <ValidationMessage For="@(() => Item.Text)" class="text-danger" />
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </EditForm>
@@ -26,22 +24,15 @@
 </div>
 
 @code {
+
+    private Review Item { get; set; } = new Review();
+
     [Parameter, EditorRequired]
     public IList<Review> Reviews { get; set; } = default!;
 
-    [Parameter]
-    public EventCallback<Review> OnSubmitReview { get; set; }
-
-    async Task SaveAsync()
+    void InsertReview()
     {
-        var review = new Review
-            {
-                Rating = EditContext.Model.Rating,
-                Text = EditContext.Model.Text
-            };
-        EditContext.Model.Text = string.Empty;
-        EditContext.Model.Rating = 0;
-        await OnSubmitReview.InvokeAsync(review);
-        
+        Reviews.Add(Item);
+        Item = new Review();
     }
 }
