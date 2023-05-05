@@ -1,5 +1,5 @@
 ﻿@page "/Details/{beerId}"
-
+@*@attribute [ComponentRenderMode(WebComponentRenderMode.Server)]*@
 @inject IBrewerService brewerService
 
 @if (Beer == null)
@@ -44,7 +44,8 @@ else
         </div>
     </div>
 
-    <StarRatingReviews Reviews="Reviews" OnSubmitReview="OnSubmitReview" />
+    <StarRatingReviewsSSR Reviews="Reviews" OnSubmitReview="OnSubmitReview" />
+   @* <StarRatingReviews Reviews="Reviews" OnSubmitReview="OnSubmitReview" />*@
 
 }
 
@@ -66,6 +67,7 @@ else
     Task OnSubmitReview(Review review)
     {
         Reviews.Insert(0, review);
+        StateHasChanged();
         return Task.CompletedTask;
     }
 }

@@ -2,7 +2,7 @@
 @inject NavigationManager Nav
 <div class="reviews">
     <h2>Reviews</h2>
-    <EditForm  class="review-editor" EditContext="EditContext" OnValidSubmit="SaveAsync">
+    <EditForm method="post" class="review-editor" EditContext="EditContext" enhance>
         <StarRating @bind-Value="EditContext.Model.Rating" />
         <ValidationMessage For="@(() => EditContext.Model.Rating)" class="text-danger" />
 
@@ -29,19 +29,19 @@
     [Parameter, EditorRequired]
     public IList<Review> Reviews { get; set; } = default!;
 
+    //[SupplyParameterFromForm]
+    //public Review Review { get; set; }
+
     [Parameter]
     public EventCallback<Review> OnSubmitReview { get; set; }
 
-    async Task SaveAsync()
+    protected override async Task OnInitializedAsync()
     {
-        var review = new Review
-            {
-                Rating = EditContext.Model.Rating,
-                Text = EditContext.Model.Text
-            };
-        EditContext.Model.Text = string.Empty;
-        EditContext.Model.Rating = 0;
-        await OnSubmitReview.InvokeAsync(review);
-        
+        if (EditContext.IsModified() && EditContext.Validate())
+        {
+            await OnSubmitReview.InvokeAsync(EditContext.Model);
+            Nav.NavigateTo(Nav.Uri, forceLoad: true);
+        }
     }
+
 }
