@@ -11,7 +11,6 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 
 builder.Services.AddBrewerServices();
 
-builder.Services.AddServerSideBlazor();
 builder.Services.AddRazorComponents();
 
 var app = builder.Build();

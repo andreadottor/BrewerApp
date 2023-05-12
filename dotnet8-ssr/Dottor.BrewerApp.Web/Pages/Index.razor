@@ -1,5 +1,5 @@
 ﻿@page "/"
-@attribute [StreamRendering(false)]
+@attribute [StreamRendering(true)]
 @inject IBrewerService brewerService
 
 <PageTitle>Beers</PageTitle>
@@ -40,10 +40,5 @@ else
     protected override async Task OnInitializedAsync()
     {
         _beers = await brewerService.GetBeersAsync();
-
-        //_beers = new List<Beer>()
-        //{
-        //    new Beer()
-        //};
     }
 }
