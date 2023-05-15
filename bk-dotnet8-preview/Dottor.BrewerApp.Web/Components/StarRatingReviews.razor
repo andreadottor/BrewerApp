@@ -1,6 +1,7 @@
 ﻿<div class="reviews">
     <h2>Reviews</h2>
     <EditForm class="review-editor" Model="Item" OnValidSubmit="InsertReview">
+        <DataAnnotationsValidator />
         <StarRating @bind-Value="Item.Rating" />
         <ValidationMessage For="@(() => Item.Rating)" class="text-danger" />
 
