@@ -34,11 +34,11 @@ internal class BrewerService : IBrewerService
     public async Task<IEnumerable<Beer>> GetBeersAsync()
     {
         var client = _httpClientFactory.CreateClient(HttpClientName);
-        var httpRespose = await client.GetAsync("v2/beers");
+        var httpResponse = await client.GetAsync("v2/beers");
 
-        if (httpRespose.IsSuccessStatusCode)
+        if (httpResponse.IsSuccessStatusCode)
         {
-            var list = await httpRespose.Content.ReadFromJsonAsync<BeerDto[]>();
+            var list = await httpResponse.Content.ReadFromJsonAsync<BeerDto[]>();
             if(list is null)
                 return Enumerable.Empty<Beer>();
 
@@ -47,7 +47,7 @@ internal class BrewerService : IBrewerService
         }
         else
         {
-            _logger.LogError("Error on call 'v2/beers/'. Response status code: {StatusCode} {ReasonPhrase}", (int)httpRespose.StatusCode, httpRespose.ReasonPhrase);
+            _logger.LogError("Error on call 'v2/beers/'. Response status code: {StatusCode} {ReasonPhrase}", (int)httpResponse.StatusCode, httpResponse.ReasonPhrase);
         }
 
         return Enumerable.Empty<Beer>();
@@ -56,11 +56,11 @@ internal class BrewerService : IBrewerService
     public async Task<Beer?> GetBeerAsync(int id)
     {
         var client = _httpClientFactory.CreateClient(HttpClientName);
-        var httpRespose = await client.GetAsync($"v2/beers/{id}");
+        var httpResponse = await client.GetAsync($"v2/beers/{id}");
 
-        if (httpRespose.IsSuccessStatusCode)
+        if (httpResponse.IsSuccessStatusCode)
         {
-            var list = await httpRespose.Content.ReadFromJsonAsync<BeerDto[]>();
+            var list = await httpResponse.Content.ReadFromJsonAsync<BeerDto[]>();
             if (list is not null && list.Length > 0)
             {
                 var beer = BeerMapper.Map(list[0]);
@@ -69,7 +69,7 @@ internal class BrewerService : IBrewerService
         }
         else
         {
-            _logger.LogError("Error on call 'v2/beers/{id}'. Response status code: {StatusCode} {ReasonPhrase}", id, (int)httpRespose.StatusCode, httpRespose.ReasonPhrase);
+            _logger.LogError("Error on call 'v2/beers/{id}'. Response status code: {StatusCode} {ReasonPhrase}", id, (int)httpResponse.StatusCode, httpResponse.ReasonPhrase);
         }
 
         return null;
@@ -78,11 +78,11 @@ internal class BrewerService : IBrewerService
     public async Task<Beer> GetRandomBeerAsync()
     {
         var client = _httpClientFactory.CreateClient(HttpClientName);
-        var httpRespose = await client.GetAsync("v2/beers/random");
+        var httpResponse = await client.GetAsync("v2/beers/random");
         
-        if (httpRespose.IsSuccessStatusCode)
+        if (httpResponse.IsSuccessStatusCode)
         {
-            var list = await httpRespose.Content.ReadFromJsonAsync<BeerDto[]>();
+            var list = await httpResponse.Content.ReadFromJsonAsync<BeerDto[]>();
             if (list is not null &&
                 list.Length > 0)
             {
@@ -92,7 +92,7 @@ internal class BrewerService : IBrewerService
         }
         else
         {
-            _logger.LogError("Error on call 'v2/beers/random'. Response status code: {StatusCode} {ReasonPhrase}", (int)httpRespose.StatusCode, httpRespose.ReasonPhrase);
+            _logger.LogError("Error on call 'v2/beers/random'. Response status code: {StatusCode} {ReasonPhrase}", (int)httpResponse.StatusCode, httpResponse.ReasonPhrase);
         }
 
         throw new Exception("Random beer API return no beer.");
