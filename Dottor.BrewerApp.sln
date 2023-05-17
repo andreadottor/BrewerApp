@@ -19,6 +19,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET 8 SSR", ".NET 8 SSR", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dottor.BrewerApp.Web", "dotnet8-ssr\Dottor.BrewerApp.Web\Dottor.BrewerApp.Web.csproj", "{E5C7B732-8D0B-4E3A-946D-89BE55AD6E39}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A3DFD94E-36FA-46EB-B469-14F1B3FA7248}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		NuGet.Config = NuGet.Config
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
