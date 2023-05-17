@@ -1,0 +1,54 @@
+﻿@inject FormDataProvider FormData
+@inject NavigationManager Nav
+<div class="reviews">
+    <h2>Reviews</h2>
+    <EditForm method="post" class="review-editor" Model="Review" OnValidSubmit="HandleSubmit">
+        <StarRating @bind-Value="Review.Rating" />
+
+        <InputTextArea rows="5" placeholder="Write a review" @bind-Value="Review.Text" />
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
+
+    @for (int i = 0; i < Reviews.Count; i++)
+    {
+        var review = Reviews[i];
+        <div class="review">
+            <StarRating Value="review.Rating" />
+            <p>@review.Text</p>
+            @if (i < Reviews.Count - 1)
+            {
+                <hr />
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public IList<Review> Reviews { get; set; } = new List<Review>();
+
+    public Review Review { get; set; } = new Review();
+
+
+    protected override void OnInitialized()
+    {
+        // Manually model bind the form data using the FormDataProvider service
+        if (FormData.Entries.TryGetValue("Rating", out var rating))
+        {
+            Review.Rating = Convert.ToDouble(rating.First());
+        }
+        if (FormData.Entries.TryGetValue("Text", out var text))
+        {
+            Review.Text = text.First();
+        }
+    }
+
+    void HandleSubmit()
+    {
+        // Handle the submitted form data
+        Reviews.Add(Review);
+        Review = new Review();
+    }
+
+}
