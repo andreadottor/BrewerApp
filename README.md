@@ -4,7 +4,7 @@
 
 Demo per il XE One Day App Modernizazion (20.05.2023)
 
-- Download slide: 
+- Download slide: [slide](https://github.com/andreadottor/BrewerApp/blob/39dfc468fa80152172e51ab7e07ada7c1c297f57/Blazor%20United%20-%20Un%20salto%20nel%20futuro.pdf)
 
 
 ## Come migliorare la nostra applicazione web con .NET 7
