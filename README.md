@@ -2,10 +2,15 @@
 
 ## Blazor United. Un salto nel futuro.
 
+Demo per la Blazor Conf 2023 (26.05.2023)
+
+- Download slide: [slide](https://github.com/andreadottor/BrewerApp/blob/0d259d622f503825e6841d243725abfd1a3776d1/Blazor%20United%20-%20BlazorConf2023.pdf)
+
+## Blazor United. Un salto nel futuro.
+
 Demo per il XE One Day App Modernizazion (20.05.2023)
 
 - Download slide: [slide](https://github.com/andreadottor/BrewerApp/blob/39dfc468fa80152172e51ab7e07ada7c1c297f57/Blazor%20United%20-%20Un%20salto%20nel%20futuro.pdf)
-
 
 ## Come migliorare la nostra applicazione web con .NET 7
 
